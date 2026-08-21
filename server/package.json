@@ -1,0 +1,44 @@
+{
+  "name": "toybox-server",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "ToyBox REST API — Express + TypeScript + PostgreSQL",
+  "scripts": {
+    "dev": "tsx watch scripts/dev.ts",
+    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:migrate": "tsx scripts/db.ts migrate",
+    "db:seed": "tsx scripts/db.ts seed",
+    "db:reset": "tsx scripts/db.ts reset",
+    "e2e": "node scripts/e2e-start.mjs"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "^2.1.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
+    "helmet": "^8.3.0",
+    "nodemailer": "^9.0.5",
+    "pg": "^8.23.0",
+    "razorpay": "^2.9.8",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.13.2",
+    "@types/nodemailer": "^8.0.1",
+    "@types/pg": "^8.15.6",
+    "@types/supertest": "^6.0.3",
+    "embedded-postgres": "^18.4.0-beta.17",
+    "supertest": "^7.2.2",
+    "tsx": "^4.23.12",
+    "typescript": "~6.0.2",
+    "vitest": "^4.1.10"
+  }
+}

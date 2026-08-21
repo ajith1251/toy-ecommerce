@@ -1,0 +1,49 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Server runtime (embedded PostgreSQL data, email outboxes, build output)
+server/.env
+server/.pgdata*
+server/.outbox*
+server/dist
+
+# Environment files (never commit real secrets — *.example files are safe)
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Backups (may contain customer data)
+backups/
+*.sql.gz
+*.snapshot.json
+
+# Test output
+coverage
+playwright-report
+test-results
+
+# Build info
+*.tsbuildinfo
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

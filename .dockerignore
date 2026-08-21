@@ -1,0 +1,33 @@
+# Keep development-only content and potential secrets out of build context.
+# Never allow these into production images.
+.git
+.github
+.env
+.env.*
+!.env.example
+!.env.production.example
+
+# Dependencies and build outputs (rebuilt inside the images)
+node_modules
+server/node_modules
+dist
+server/dist
+coverage
+
+# Local databases and runtime artifacts
+server/.pgdata*
+server/.outbox.jsonl
+*.log
+vite-*.log
+
+# Tests and reports
+e2e
+playwright-report
+test-results
+
+# Docs and editor state (not needed at runtime)
+docs
+.vscode
+.idea
+.freebuff
+backups

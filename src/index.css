@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+.dark body,
+.dark #root {
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark .bg-white {
+  background-color: #1e293b;
+}
+
+.dark .bg-slate-50 {
+  background-color: #0f172a;
+}
+
+.dark .text-slate-900 {
+  color: #f1f5f9;
+}
+
+.dark .border-slate-100 {
+  border-color: #334155;
+}
+
+.dark .hover\:bg-slate-50:hover {
+  background-color: #1e293b;
+}
+
+.dark .hover\:bg-slate-100:hover {
+  background-color: #334155;
+}

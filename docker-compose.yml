@@ -1,0 +1,75 @@
+# ToyBox — production-like local/staging stack.
+#
+#   docker compose up --build
+#   → web  http://localhost:8080   (nginx: static frontend + /api proxy)
+#   → api  internal :4000          (never published; reached via nginx)
+#   → postgres internal :5432      (NOT exposed to the host)
+#
+# Secrets come from environment/.env — never hardcode them here.
+# Razorpay stays external; point the webhook at https://<public-host>/api/payments/webhook.
+
+name: toybox
+
+services:
+  postgres:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-toybox}
+      POSTGRES_USER: ${POSTGRES_USER:-toybox}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    # No `ports:` — PostgreSQL is reachable only on the internal network.
+    networks: [internal]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgres://${POSTGRES_USER:-toybox}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-toybox}
+      EMBEDDED_PG: '0'
+      LOG_FORMAT: json
+      # Same-origin deployment: the browser talks to nginx, which proxies /api.
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+      APP_BASE_URL: ${APP_BASE_URL:-http://localhost:8080}
+      RAZORPAY_KEY_ID: ${RAZORPAY_KEY_ID:-}
+      RAZORPAY_KEY_SECRET: ${RAZORPAY_KEY_SECRET:-}
+      RAZORPAY_WEBHOOK_SECRET: ${RAZORPAY_WEBHOOK_SECRET:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      MAIL_FROM: ${MAIL_FROM:-ToyBox <no-reply@toybox.local>}
+    networks: [internal]
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+      args:
+        VITE_API_BASE_URL: /api
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - '${WEB_PORT:-8080}:80'
+    networks: [internal]
+
+volumes:
+  pgdata:
+
+networks:
+  internal:
