@@ -130,18 +130,18 @@ export default function AccountAddressesPage() {
 
   return (
     <div className="pt-24 pb-10">
-      <div className="max-w-4xl mx-auto px-6 pt-4 flex flex-col gap-6">
+      <div className="max-w-4xl mx-auto px-6 pt-4 flex flex-col gap-8">
         <Breadcrumbs items={[{ label: 'Account', to: '/account' }, { label: 'Addresses' }]} />
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
-            <MapPin size={24} className="text-red-500" aria-hidden />
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-[var(--radius-button,8px)] bg-[var(--accent-coral)]/10 flex items-center justify-center border border-[var(--accent-coral)]/20">
+            <MapPin size={32} className="text-[var(--accent-coral)]" aria-hidden />
           </div>
           <div className="flex-1">
-            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Addresses</h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Saved shipping addresses for faster checkout.</p>
+            <h1 className="text-3xl font-extrabold text-[var(--ink-strong)]">Addresses</h1>
+            <p className="text-sm font-semibold text-[var(--muted-light)] mt-1">Saved shipping addresses for faster checkout.</p>
           </div>
-          <Button size="sm" onClick={openNew}>
-            <Plus size={14} aria-hidden /> Add
+          <Button onClick={openNew}>
+            <Plus size={16} aria-hidden className="mr-2" /> Add Address
           </Button>
         </div>
 
@@ -149,38 +149,38 @@ export default function AccountAddressesPage() {
 
         {loadError ? (
           <div className="text-center py-16">
-            <p className="text-slate-500 dark:text-slate-400 mb-4">{loadError}</p>
+            <p className="text-[var(--muted)] font-medium mb-4">{loadError}</p>
             <Button variant="outline" onClick={load}>Try Again</Button>
           </div>
         ) : addresses === null ? (
-          <p className="text-slate-400 text-center py-16">Loading your addresses…</p>
+          <p className="text-[var(--muted-light)] font-bold text-center py-16">Loading your addresses…</p>
         ) : addresses.length === 0 && editing === null ? (
           <EmptyState
             icon={<MapPin size={64} />}
             title="No saved addresses yet"
             description="Add an address and pick it during checkout."
-            actions={<Button onClick={openNew}><Plus size={16} aria-hidden /> Add an address</Button>}
+            actions={<Button onClick={openNew}><Plus size={16} aria-hidden className="mr-2" /> Add an address</Button>}
           />
         ) : (
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             {addresses.map(address => (
               <div
                 key={address.id}
-                className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-5 flex flex-col sm:flex-row sm:items-center gap-4"
+                className="bg-[var(--surface)] rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm p-6 flex flex-col sm:flex-row sm:items-center gap-6"
               >
                 <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-bold text-slate-900 dark:text-white">{address.label || 'Address'}</span>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-lg font-extrabold text-[var(--ink-strong)]">{address.label || 'Address'}</span>
                     {address.isDefault && (
-                      <span className="text-xs font-semibold bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full">
+                      <span className="text-[10px] font-bold uppercase tracking-widest bg-[var(--surface-soft)] text-[var(--accent-green)] border border-[var(--accent-green)] px-3 py-1 rounded-full">
                         Default
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-slate-300">
+                  <p className="text-sm font-bold text-[var(--ink)] mb-1">
                     {address.firstName} {address.lastName}
                   </p>
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                  <p className="text-sm font-medium text-[var(--muted)]">
                     {address.line1}
                     {address.line2 ? `, ${address.line2}` : ''}, {address.city}
                     {address.state ? `, ${address.state}` : ''} {address.postalCode}, {address.country}
@@ -189,25 +189,25 @@ export default function AccountAddressesPage() {
                 <div className="flex items-center gap-2">
                   {!address.isDefault && (
                     <Button variant="ghost" size="sm" onClick={() => setDefault(address.id)}>
-                      <Check size={14} aria-hidden /> Set default
+                      <Check size={16} aria-hidden className="mr-1.5" /> Set default
                     </Button>
                   )}
                   <Button variant="ghost" size="sm" onClick={() => openEdit(address)} aria-label={`Edit ${address.label || 'address'}`}>
-                    <Pencil size={14} aria-hidden /> Edit
+                    <Pencil size={16} aria-hidden className="mr-1.5" /> Edit
                   </Button>
                   <Button variant="ghost" size="sm" onClick={() => remove(address.id)} aria-label={`Delete ${address.label || 'address'}`}>
-                    <Trash2 size={14} aria-hidden />
+                    <Trash2 size={16} aria-hidden />
                   </Button>
                 </div>
               </div>
             ))}
 
             {editing && (
-              <form onSubmit={submit} className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 flex flex-col gap-4">
-                <h2 className="font-bold text-slate-900 dark:text-white">
+              <form onSubmit={submit} className="bg-[var(--surface)] rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm p-8 flex flex-col gap-6">
+                <h2 className="text-xl font-extrabold text-[var(--ink-strong)] border-b border-[var(--hairline)] pb-4">
                   {editing === 'new' ? 'New address' : 'Edit address'}
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Input label="Label" name="label" value={form.label} onChange={e => setForm(f => ({ ...f, label: e.target.value }))} placeholder="Home, Work…" />
                   <Input label="Phone" name="phone" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
                   <Input label="First name" name="firstName" value={form.firstName} onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))} />
@@ -221,10 +221,10 @@ export default function AccountAddressesPage() {
                   <Input label="Postal code" name="postalCode" value={form.postalCode} onChange={e => setForm(f => ({ ...f, postalCode: e.target.value }))} required />
                   <Input label="Country" name="country" value={form.country} onChange={e => setForm(f => ({ ...f, country: e.target.value }))} required />
                 </div>
-                {error && <p role="alert" className="text-sm font-medium text-red-500">{error}</p>}
-                <div className="flex gap-3">
-                  <Button type="submit" size="sm" loading={saving}>Save address</Button>
-                  <Button type="button" variant="ghost" size="sm" onClick={() => setEditing(null)}>Cancel</Button>
+                {error && <p role="alert" className="text-sm font-bold text-[var(--accent-coral)] bg-[var(--accent-coral)]/10 px-4 py-3 rounded-[8px]">{error}</p>}
+                <div className="flex gap-4">
+                  <Button type="submit" loading={saving}>Save Address</Button>
+                  <Button type="button" variant="ghost" onClick={() => setEditing(null)}>Cancel</Button>
                 </div>
               </form>
             )}

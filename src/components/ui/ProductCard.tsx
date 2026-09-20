@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Star, ShoppingCart, Eye } from 'lucide-react';
+import { Heart, Star, Eye } from 'lucide-react';
 import { cn } from '../../lib/cn';
 import { formatMoney } from '../../utils/orderCalculations';
 import type { Toy } from '../../types';
@@ -26,10 +26,10 @@ export default function ProductCard({ toy, onAddToCart, onToggleWishlist, isInWi
       layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8 }}
-      className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-700 hover:shadow-2xl transition-all duration-500"
+      whileHover={{ y: -4 }}
+      className="group bg-[var(--surface)] rounded-[var(--radius-card,16px)] overflow-hidden border border-[var(--hairline)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] transition-all duration-500 flex flex-col h-full"
     >
-      <div className="relative aspect-[4/5] overflow-hidden">
+      <div className="relative aspect-[4/5] overflow-hidden bg-[var(--surface-soft)]">
         <Link
           to={`/product/${toy.id}`}
           aria-label={`View ${toy.name}`}
@@ -40,10 +40,10 @@ export default function ProductCard({ toy, onAddToCart, onToggleWishlist, isInWi
             alt={toy.name}
             loading="lazy"
             decoding="async"
-            className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700"
+            className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-700 ease-out"
           />
         </Link>
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
+        <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
           {toy.isNew && <Badge variant="new">New</Badge>}
           {toy.isBestseller && <Badge variant="bestseller">Bestseller</Badge>}
           {discount > 0 && <Badge variant="sale">-{discount}%</Badge>}
@@ -53,64 +53,68 @@ export default function ProductCard({ toy, onAddToCart, onToggleWishlist, isInWi
           onClick={(e) => { e.stopPropagation(); onToggleWishlist(toy); }}
           aria-label={isInWishlist ? `Remove ${toy.name} from wishlist` : `Add ${toy.name} to wishlist`}
           className={cn(
-            'absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-md rounded-full transition-all opacity-0 group-hover:opacity-100 cursor-pointer',
-            isInWishlist ? 'text-red-500' : 'text-slate-900 hover:text-red-500'
+            'absolute top-4 right-4 p-2.5 bg-white/90 backdrop-blur-md rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 cursor-pointer shadow-sm hover:scale-105 active:scale-95 z-10',
+            isInWishlist ? 'text-[var(--accent-coral)] opacity-100' : 'text-[var(--ink)] hover:text-[var(--accent-coral)]'
           )}
         >
-          <Heart size={20} fill={isInWishlist ? 'currentColor' : 'none'} />
+          <Heart size={18} fill={isInWishlist ? 'currentColor' : 'none'} className={isInWishlist ? 'scale-110 transition-transform' : 'transition-transform'} />
         </button>
 
-        <div className="absolute top-4 right-4 mt-12 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all">
+        <div className="absolute top-16 right-4 mt-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 z-10">
           <button
             onClick={(e) => { e.stopPropagation(); onQuickView(toy); }}
             title="Quick View"
             aria-label={`Quick view ${toy.name}`}
-            className="p-2 bg-white/80 backdrop-blur-md rounded-full text-slate-900 hover:text-blue-500 transition-colors cursor-pointer"
+            className="p-2.5 bg-white/90 backdrop-blur-md rounded-full text-[var(--ink)] hover:text-[var(--accent-blue)] transition-all shadow-sm cursor-pointer hover:scale-105 active:scale-95"
           >
-            <Eye size={20} />
+            <Eye size={18} />
           </button>
         </div>
 
-        <div className="absolute bottom-4 left-0 right-0 px-4 translate-y-12 group-hover:translate-y-0 transition-transform duration-300">
-          <Button onClick={() => onAddToCart(toy)} className="w-full py-2 text-sm shadow-xl">
-            <ShoppingCart size={16} /> Add to Cart
+        <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-10">
+          <Button onClick={() => onAddToCart(toy)} className="w-full py-3 text-sm shadow-lg font-semibold tracking-wide">
+            Add to Cart
           </Button>
         </div>
       </div>
 
-      <div className="p-5">
-        <div className="flex items-center gap-2 mb-1">
+      <div className="p-6 flex flex-col flex-1">
+        <div className="flex items-center gap-2 mb-2">
           <span
             className={cn(
-              'text-xs font-semibold px-2 py-0.5 rounded-full',
+              'text-xs font-bold uppercase tracking-wider',
               toy.ageGroup === 'adults'
-                ? 'bg-slate-900 text-white'
+                ? 'text-[var(--ink-strong)]'
                 : toy.ageGroup === 'teens'
-                ? 'bg-purple-100 text-purple-700'
-                : 'bg-blue-100 text-blue-700'
+                ? 'text-[var(--accent-purple)]'
+                : 'text-[var(--accent-blue)]'
             )}
           >
             {toy.ageGroup === 'adults' ? '18+' : toy.ageRange}
           </span>
-          <span className="text-slate-400 dark:text-slate-500 text-xs">{toy.brand}</span>
+          <span className="text-[var(--muted-light)] text-xs font-medium">•</span>
+          <span className="text-[var(--muted)] text-xs font-medium uppercase tracking-wider">{toy.brand}</span>
         </div>
-        <Link to={`/product/${toy.id}`} className="block">
-          <h3 className="font-semibold text-slate-900 dark:text-white text-lg group-hover:text-red-500 transition-colors mt-2">
+        
+        <Link to={`/product/${toy.id}`} className="block mb-2 group-hover:u-link">
+          <h3 className="font-semibold text-[var(--ink-strong)] text-lg leading-snug">
             {toy.name}
           </h3>
         </Link>
-        <p className="text-slate-400 dark:text-slate-500 text-sm mt-1 line-clamp-1">{toy.description}</p>
-        <div className="flex items-center justify-between mt-3">
-          <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-slate-900 dark:text-white">{formatMoney(toy.price)}</span>
+        
+        <p className="text-[var(--muted)] text-sm line-clamp-1 mb-4 flex-1">{toy.description}</p>
+        
+        <div className="flex items-end justify-between mt-auto">
+          <div className="flex flex-col gap-0.5">
             {toy.originalPrice && (
-              <span className="text-sm text-slate-400 line-through">{formatMoney(toy.originalPrice)}</span>
+              <span className="text-xs text-[var(--muted-light)] line-through font-medium">{formatMoney(toy.originalPrice)}</span>
             )}
+            <span className="text-xl font-semibold text-[var(--ink-strong)] tracking-tight">{formatMoney(toy.price)}</span>
           </div>
-          <div className="flex items-center gap-1 text-amber-400">
-            <Star size={14} fill="currentColor" />
-            <span className="text-slate-600 dark:text-slate-300 text-sm font-medium">{toy.rating}</span>
-            <span className="text-slate-400 text-xs">({toy.reviewCount})</span>
+          <div className="flex items-center gap-1.5 bg-[var(--surface-soft)] px-2 py-1 rounded-[var(--radius-badge,6px)]">
+            <Star size={12} className="text-[var(--accent-yellow)]" fill="currentColor" />
+            <span className="text-[var(--ink)] text-xs font-semibold">{toy.rating}</span>
+            <span className="text-[var(--muted-light)] text-xs">({toy.reviewCount})</span>
           </div>
         </div>
       </div>

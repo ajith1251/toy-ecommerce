@@ -50,79 +50,87 @@ export default function AccountPage() {
 
   return (
     <div className="pt-24 pb-10">
-      <div className="max-w-4xl mx-auto px-6 pt-4 flex flex-col gap-6">
+      <div className="max-w-4xl mx-auto px-6 pt-4 flex flex-col gap-8">
         <Breadcrumbs items={[{ label: 'Account' }]} />
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
-            <User size={24} className="text-red-500" aria-hidden />
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-[var(--radius-button,8px)] bg-[var(--accent-coral)]/10 flex items-center justify-center border border-[var(--accent-coral)]/20">
+            <User size={32} className="text-[var(--accent-coral)]" aria-hidden />
           </div>
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">
+            <h1 className="text-3xl font-extrabold text-[var(--ink-strong)]">
               Hi, {user.firstName || user.email.split('@')[0]}
             </h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Your account overview</p>
+            <p className="text-sm font-semibold text-[var(--muted-light)] mt-1">Your account overview</p>
           </div>
         </div>
 
         <AccountNav />
 
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Profile</h2>
+        <div className="bg-[var(--surface)] rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm p-8">
+          <div className="flex items-center justify-between mb-6 border-b border-[var(--hairline)] pb-4">
+            <h2 className="text-xl font-extrabold text-[var(--ink-strong)]">Profile</h2>
             {!editing && (
               <Button variant="outline" size="sm" onClick={startEdit}>
-                <Pencil size={14} aria-hidden /> Edit
+                <Pencil size={14} aria-hidden className="mr-1.5" /> Edit
               </Button>
             )}
           </div>
 
           {editing ? (
-            <form onSubmit={save} className="flex flex-col gap-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <form onSubmit={save} className="flex flex-col gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <Input label="First name" name="firstName" value={form.firstName} onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))} />
                 <Input label="Last name" name="lastName" value={form.lastName} onChange={e => setForm(f => ({ ...f, lastName: e.target.value }))} />
               </div>
               <Input label="Phone" name="phone" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} />
-              {error && <p role="alert" className="text-sm font-medium text-red-500">{error}</p>}
-              <div className="flex gap-3">
-                <Button type="submit" size="sm" loading={saving}>
-                  <Check size={14} aria-hidden /> Save
+              {error && <p role="alert" className="text-sm font-bold text-[var(--accent-coral)] bg-[var(--accent-coral)]/10 px-4 py-3 rounded-[8px]">{error}</p>}
+              <div className="flex gap-4">
+                <Button type="submit" loading={saving}>
+                  <Check size={16} aria-hidden className="mr-2" /> Save Changes
                 </Button>
-                <Button type="button" variant="ghost" size="sm" onClick={() => setEditing(false)}>
-                  <X size={14} aria-hidden /> Cancel
+                <Button type="button" variant="ghost" onClick={() => setEditing(false)}>
+                  <X size={16} aria-hidden className="mr-2" /> Cancel
                 </Button>
               </div>
             </form>
           ) : (
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4">
-              <div className="flex items-center gap-3">
-                <Mail size={18} className="text-slate-400" aria-hidden />
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+              <div className="flex items-start gap-4">
+                <div className="mt-1">
+                  <Mail size={20} className="text-[var(--accent-blue)]" aria-hidden />
+                </div>
                 <div>
-                  <dt className="text-xs text-slate-400 uppercase tracking-wide">Email</dt>
-                  <dd className="text-sm font-semibold text-slate-800 dark:text-slate-200">{user.email}</dd>
+                  <dt className="text-[10px] font-bold text-[var(--accent-blue)] uppercase tracking-widest mb-1">Email</dt>
+                  <dd className="text-sm font-bold text-[var(--ink-strong)]">{user.email}</dd>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <Phone size={18} className="text-slate-400" aria-hidden />
+              <div className="flex items-start gap-4">
+                <div className="mt-1">
+                  <Phone size={20} className="text-[var(--accent-green)]" aria-hidden />
+                </div>
                 <div>
-                  <dt className="text-xs text-slate-400 uppercase tracking-wide">Phone</dt>
-                  <dd className="text-sm font-semibold text-slate-800 dark:text-slate-200">{user.phone || '—'}</dd>
+                  <dt className="text-[10px] font-bold text-[var(--accent-green)] uppercase tracking-widest mb-1">Phone</dt>
+                  <dd className="text-sm font-bold text-[var(--ink-strong)]">{user.phone || '—'}</dd>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <User size={18} className="text-slate-400" aria-hidden />
+              <div className="flex items-start gap-4">
+                <div className="mt-1">
+                  <User size={20} className="text-[var(--accent-yellow)]" aria-hidden />
+                </div>
                 <div>
-                  <dt className="text-xs text-slate-400 uppercase tracking-wide">Name</dt>
-                  <dd className="text-sm font-semibold text-slate-800 dark:text-slate-200">
+                  <dt className="text-[10px] font-bold text-[var(--accent-yellow)] uppercase tracking-widest mb-1">Name</dt>
+                  <dd className="text-sm font-bold text-[var(--ink-strong)]">
                     {user.firstName} {user.lastName}
                   </dd>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
-                <CalendarDays size={18} className="text-slate-400" aria-hidden />
+              <div className="flex items-start gap-4">
+                <div className="mt-1">
+                  <CalendarDays size={20} className="text-[var(--accent-coral)]" aria-hidden />
+                </div>
                 <div>
-                  <dt className="text-xs text-slate-400 uppercase tracking-wide">Member since</dt>
-                  <dd className="text-sm font-semibold text-slate-800 dark:text-slate-200">{joined}</dd>
+                  <dt className="text-[10px] font-bold text-[var(--accent-coral)] uppercase tracking-widest mb-1">Member since</dt>
+                  <dd className="text-sm font-bold text-[var(--ink-strong)]">{joined}</dd>
                 </div>
               </div>
             </dl>

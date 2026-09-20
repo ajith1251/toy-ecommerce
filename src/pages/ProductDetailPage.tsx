@@ -13,7 +13,6 @@ import {
   getProductById,
   getProductsByCategory,
 } from '../services/productService';
-import { slugify } from '../utils/productFilters';
 import { formatMoney } from '../utils/orderCalculations';
 
 export default function ProductDetailPage() {
@@ -64,15 +63,15 @@ export default function ProductDetailPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-8">
-        <div className="grid md:grid-cols-2 gap-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 overflow-hidden">
+        <div className="grid md:grid-cols-2 gap-10 bg-[var(--surface)] rounded-[24px] border border-[var(--hairline)] shadow-sm overflow-hidden">
           {/* Image */}
-          <div className="relative">
+          <div className="relative bg-[var(--surface-soft)]">
             <img
               src={toy.image}
               alt={toy.name}
               loading="lazy"
               decoding="async"
-              className="w-full h-72 md:h-full object-cover"
+              className="w-full h-[400px] md:h-[600px] object-cover mix-blend-multiply"
             />
             <div className="absolute top-4 left-4 flex flex-col gap-2">
               {toy.isNew && <Badge variant="new">New</Badge>}
@@ -82,170 +81,166 @@ export default function ProductDetailPage() {
           </div>
 
           {/* Info */}
-          <div className="p-6 md:p-8 flex flex-col">
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              <span
-                className={cn(
-                  'text-xs font-semibold px-2.5 py-1 rounded-full',
-                  toy.ageGroup === 'adults'
-                    ? 'bg-slate-900 text-white'
-                    : toy.ageGroup === 'teens'
-                    ? 'bg-purple-100 text-purple-700'
-                    : 'bg-blue-100 text-blue-700'
-                )}
-              >
-                {toy.ageGroup === 'adults' ? '18+' : toy.ageRange}
-              </span>
+          <div className="p-8 md:p-12 flex flex-col justify-center">
+            <div className="flex items-center gap-3 mb-4 flex-wrap">
+              <span className="text-[var(--accent-blue)] font-bold text-xs tracking-widest uppercase">{toy.brand}</span>
+              <span className="w-1 h-1 rounded-full bg-[var(--hairline)]" />
+              <span className="text-[var(--muted)] text-xs font-semibold">{toy.ageGroup === 'adults' ? '18+' : toy.ageRange}</span>
               {category && (
-                <Link
-                  to={`/category/${category.id}`}
-                  className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors"
-                >
-                  {category.icon} {category.name}
-                </Link>
+                <>
+                  <span className="w-1 h-1 rounded-full bg-[var(--hairline)]" />
+                  <Link
+                    to={`/category/${category.id}`}
+                    className="text-[var(--muted)] hover:text-[var(--accent-coral)] text-xs font-semibold transition-colors flex items-center gap-1"
+                  >
+                    {category.icon} {category.name}
+                  </Link>
+                </>
               )}
             </div>
 
-            <h1 className="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-2">{toy.name}</h1>
-            <p className="text-slate-400 text-sm mb-3">
-              <Link to={`/brand/${slugify(toy.brand)}`} className="hover:text-red-500 transition-colors">
-                {toy.brand}
-              </Link>
-            </p>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--ink-strong)] mb-4 leading-tight">{toy.name}</h1>
 
-            <div className="flex items-center gap-2 mb-4">
-              <div className="flex items-center gap-1 text-amber-400">
+            <div className="flex items-center gap-2 mb-6">
+              <div className="flex items-center gap-0.5 text-[var(--accent-yellow)]">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
                     size={16}
                     fill={i < Math.floor(toy.rating) ? 'currentColor' : 'none'}
-                    className={i < Math.floor(toy.rating) ? 'text-amber-400' : 'text-slate-200 dark:text-slate-600'}
+                    className={i < Math.floor(toy.rating) ? 'text-[var(--accent-yellow)]' : 'text-[var(--hairline)]'}
                   />
                 ))}
               </div>
-              <span className="text-sm font-medium text-slate-600 dark:text-slate-300">{toy.rating}</span>
-              <span className="text-sm text-slate-400">({toy.reviewCount} reviews)</span>
+              <span className="text-sm font-bold text-[var(--ink)]">{toy.rating}</span>
+              <span className="text-sm text-[var(--muted)]">({toy.reviewCount} reviews)</span>
             </div>
 
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-3xl font-bold text-slate-900 dark:text-white">{formatMoney(toy.price)}</span>
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-4xl font-extrabold text-[var(--ink-strong)]">{formatMoney(toy.price)}</span>
               {toy.originalPrice && (
-                <span className="text-lg text-slate-400 line-through">{formatMoney(toy.originalPrice)}</span>
+                <span className="text-xl text-[var(--muted-light)] line-through">{formatMoney(toy.originalPrice)}</span>
               )}
             </div>
 
-            <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">{toy.description}</p>
+            <p className="text-[var(--muted)] text-lg mb-10 leading-relaxed font-medium">{toy.description}</p>
 
-            <div className="flex items-center gap-2 mb-6">
+            <div className="flex items-center gap-2 mb-8">
               <span
                 className={cn(
-                  'inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full',
+                  'inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-full border',
                   toy.inStock
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400'
-                    : 'bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400'
+                    ? 'bg-[var(--surface-soft)] text-[var(--accent-green)] border-[var(--hairline)]'
+                    : 'bg-[var(--surface-soft)] text-[var(--accent-coral)] border-[var(--hairline)]'
                 )}
               >
-                <span className={cn('w-1.5 h-1.5 rounded-full', toy.inStock ? 'bg-green-500' : 'bg-red-500')} />
+                <span className={cn('w-2 h-2 rounded-full', toy.inStock ? 'bg-[var(--accent-green)]' : 'bg-[var(--accent-coral)]')} />
                 {toy.inStock ? 'In Stock' : 'Out of Stock'}
               </span>
             </div>
 
-            <div className="flex items-center gap-3 mb-6">
-              <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Quantity:</span>
-              <div className="flex items-center border border-slate-200 dark:border-slate-600 rounded-lg">
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-sm font-bold text-[var(--ink)]">Quantity</span>
+              <div className="flex items-center border border-[var(--hairline)] rounded-[var(--radius-button,8px)] bg-[var(--surface-soft)] overflow-hidden shadow-sm">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
                   aria-label="Decrease quantity"
-                  className="p-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                  className="p-3 text-[var(--ink)] hover:bg-[rgba(0,0,0,0.05)] transition-colors cursor-pointer active:bg-[rgba(0,0,0,0.1)]"
                 >
                   <Minus size={16} />
                 </button>
-                <span className="px-4 py-2 font-semibold text-sm min-w-[40px] text-center text-slate-900 dark:text-white">{quantity}</span>
+                <span className="px-4 py-2 font-bold text-[15px] min-w-[48px] text-center text-[var(--ink-strong)]">{quantity}</span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
                   aria-label="Increase quantity"
-                  className="p-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+                  className="p-3 text-[var(--ink)] hover:bg-[rgba(0,0,0,0.05)] transition-colors cursor-pointer active:bg-[rgba(0,0,0,0.1)]"
                 >
                   <Plus size={16} />
                 </button>
               </div>
             </div>
 
-            <div className="flex gap-3 mb-6">
+            <div className="flex gap-4 mb-10">
               <Button
                 onClick={() => shop.addToCart(toy, quantity)}
                 disabled={!toy.inStock}
-                className="flex-1"
+                className="flex-1 shadow-md shadow-[var(--accent-blue)]/20"
+                size="lg"
               >
-                <ShoppingCart size={18} /> {toy.inStock ? 'Add to Cart' : 'Sold Out'}
+                <ShoppingCart size={20} /> {toy.inStock ? 'Add to Cart' : 'Sold Out'}
               </Button>
               <button
                 onClick={() => shop.toggleWishlist(toy)}
                 aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
                 className={cn(
-                  'p-3 rounded-full border-2 transition-all cursor-pointer',
+                  'p-4 rounded-[var(--radius-button,8px)] border-2 transition-all cursor-pointer shadow-sm active:scale-95 flex items-center justify-center',
                   inWishlist
-                    ? 'border-red-500 bg-red-50 text-red-500'
-                    : 'border-slate-200 dark:border-slate-600 hover:border-red-300 text-slate-400 dark:text-slate-400 hover:text-red-500'
+                    ? 'border-[var(--accent-coral)] bg-[var(--accent-coral)]/10 text-[var(--accent-coral)]'
+                    : 'border-[var(--hairline)] bg-[var(--surface-soft)] hover:border-[var(--accent-coral)] text-[var(--muted)] hover:text-[var(--accent-coral)]'
                 )}
               >
-                <Heart size={20} fill={inWishlist ? 'currentColor' : 'none'} />
+                <Heart size={24} fill={inWishlist ? 'currentColor' : 'none'} />
               </button>
             </div>
 
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-100 dark:border-slate-700">
-              <div className="text-center">
-                <Truck size={18} className="mx-auto text-slate-400 mb-1" aria-hidden />
-                <p className="text-xs text-slate-500 dark:text-slate-400">Free Shipping</p>
+            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[var(--hairline)]">
+              <div className="text-center group">
+                <div className="w-12 h-12 mx-auto rounded-full bg-[var(--surface-soft)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                  <Truck size={20} className="text-[var(--ink)]" aria-hidden />
+                </div>
+                <p className="text-xs font-bold text-[var(--ink)]">Free Shipping</p>
               </div>
-              <div className="text-center">
-                <Shield size={18} className="mx-auto text-slate-400 mb-1" aria-hidden />
-                <p className="text-xs text-slate-500 dark:text-slate-400">2 Year Warranty</p>
+              <div className="text-center group">
+                <div className="w-12 h-12 mx-auto rounded-full bg-[var(--surface-soft)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                  <Shield size={20} className="text-[var(--ink)]" aria-hidden />
+                </div>
+                <p className="text-xs font-bold text-[var(--ink)]">2 Year Warranty</p>
               </div>
-              <div className="text-center">
-                <RotateCcw size={18} className="mx-auto text-slate-400 mb-1" aria-hidden />
-                <p className="text-xs text-slate-500 dark:text-slate-400">30-Day Returns</p>
+              <div className="text-center group">
+                <div className="w-12 h-12 mx-auto rounded-full bg-[var(--surface-soft)] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                  <RotateCcw size={20} className="text-[var(--ink)]" aria-hidden />
+                </div>
+                <p className="text-xs font-bold text-[var(--ink)]">30-Day Returns</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Product information */}
-        <div className="mt-10 bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 p-6">
-          <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-4">Product Information</h2>
-          <dl className="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+        <div className="mt-12 bg-[var(--surface)] rounded-[24px] border border-[var(--hairline)] p-8 shadow-sm">
+          <h2 className="text-xl font-bold text-[var(--ink-strong)] mb-6">Product Details</h2>
+          <dl className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-4 text-sm">
             <div>
-              <dt className="text-slate-400 text-xs uppercase tracking-wide mb-1">Brand</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">{toy.brand}</dd>
+              <dt className="text-[var(--muted-light)] text-xs font-bold uppercase tracking-widest mb-2">Brand</dt>
+              <dd className="font-semibold text-[var(--ink)] text-base">{toy.brand}</dd>
             </div>
             <div>
-              <dt className="text-slate-400 text-xs uppercase tracking-wide mb-1">Category</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">
+              <dt className="text-[var(--muted-light)] text-xs font-bold uppercase tracking-widest mb-2">Category</dt>
+              <dd className="font-semibold text-[var(--ink)] text-base">
                 {category ? (
-                  <Link to={`/category/${category.id}`} className="hover:text-red-500 transition-colors">
+                  <Link to={`/category/${category.id}`} className="hover:text-[var(--accent-blue)] transition-colors">
                     {category.name}
                   </Link>
                 ) : toy.category}
               </dd>
             </div>
             <div>
-              <dt className="text-slate-400 text-xs uppercase tracking-wide mb-1">Age Group</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">
+              <dt className="text-[var(--muted-light)] text-xs font-bold uppercase tracking-widest mb-2">Age Group</dt>
+              <dd className="font-semibold text-[var(--ink)] text-base">
                 {toy.ageGroup === 'adults' ? 'Adults (18+)' : toy.ageGroup === 'teens' ? `Teens (${toy.ageRange})` : `Kids (${toy.ageRange})`}
               </dd>
             </div>
             <div>
-              <dt className="text-slate-400 text-xs uppercase tracking-wide mb-1">Rating</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">{toy.rating} / 5 ({toy.reviewCount} reviews)</dd>
+              <dt className="text-[var(--muted-light)] text-xs font-bold uppercase tracking-widest mb-2">Rating</dt>
+              <dd className="font-semibold text-[var(--ink)] text-base">{toy.rating} / 5 ({toy.reviewCount} reviews)</dd>
             </div>
             <div>
-              <dt className="text-slate-400 text-xs uppercase tracking-wide mb-1">Availability</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">{toy.inStock ? 'In Stock' : 'Out of Stock'}</dd>
+              <dt className="text-[var(--muted-light)] text-xs font-bold uppercase tracking-widest mb-2">Availability</dt>
+              <dd className="font-semibold text-[var(--ink)] text-base">{toy.inStock ? 'In Stock' : 'Out of Stock'}</dd>
             </div>
             <div>
-              <dt className="text-slate-400 text-xs uppercase tracking-wide mb-1">Product ID</dt>
-              <dd className="font-medium text-slate-900 dark:text-white">#{toy.id}</dd>
+              <dt className="text-[var(--muted-light)] text-xs font-bold uppercase tracking-widest mb-2">Product ID</dt>
+              <dd className="font-semibold text-[var(--ink)] text-base">#{toy.id}</dd>
             </div>
           </dl>
         </div>
@@ -280,7 +275,7 @@ function ProductNotFound({ onExplore }: { onExplore: () => void }) {
             <Button onClick={onExplore}>Explore Toys</Button>
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-slate-200 hover:border-red-500 hover:text-red-500 font-medium transition-all"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-[var(--hairline)] hover:border-[var(--accent-blue)] text-[var(--ink)] hover:text-[var(--accent-blue)] font-medium transition-all shadow-sm"
             >
               Back to ToyBox
             </Link>

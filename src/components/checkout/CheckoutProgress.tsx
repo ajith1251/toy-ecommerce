@@ -25,21 +25,21 @@ export default function CheckoutProgress({ current }: CheckoutProgressProps) {
           <div key={step.key} className="flex items-center gap-2">
             <div
               aria-current={active ? 'step' : undefined}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all ${
                 active
-                  ? 'bg-red-500 text-white shadow-md'
+                  ? 'bg-[var(--accent-blue)] text-[var(--page)] shadow-md shadow-[var(--accent-blue)]/20'
                   : completed
-                    ? 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400'
-                    : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
+                    ? 'bg-[var(--surface-soft)] border border-[var(--accent-green)] text-[var(--accent-green)]'
+                    : 'bg-[var(--surface-soft)] border border-[var(--hairline)] text-[var(--muted-light)]'
               }`}
             >
-              {completed ? <Check size={14} aria-hidden /> : <Icon size={14} aria-hidden />}
+              {completed ? <Check size={16} aria-hidden /> : <Icon size={16} aria-hidden />}
               <span>{step.label}</span>
             </div>
             {i < STEPS.length - 1 && (
               <div
                 aria-hidden
-                className={`w-6 h-0.5 rounded ${completed ? 'bg-green-400' : 'bg-slate-200 dark:bg-slate-700'}`}
+                className={`w-8 h-1 rounded-full ${completed ? 'bg-[var(--accent-green)]' : 'bg-[var(--surface-soft)]'}`}
               />
             )}
           </div>

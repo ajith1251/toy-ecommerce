@@ -7,9 +7,9 @@ import { formatOrderDate } from '../../services/orderService';
 import { formatMoney } from '../../utils/orderCalculations';
 
 const statusStyles: Record<OrderStatus, string> = {
-  confirmed: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400',
-  shipped: 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400',
-  delivered: 'bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-400',
+  confirmed: 'bg-[var(--surface)] border border-[var(--accent-blue)] text-[var(--accent-blue)]',
+  shipped: 'bg-[var(--surface)] border border-[var(--accent-yellow)] text-[var(--accent-yellow)]',
+  delivered: 'bg-[var(--surface)] border border-[var(--accent-green)] text-[var(--accent-green)]',
 };
 
 interface OrderCardProps {
@@ -24,46 +24,46 @@ interface OrderCardProps {
 export default function OrderCard({ order, index = 0, to, onClick }: OrderCardProps) {
   const content = (
     <>
-      <div className="flex items-center justify-between gap-3 mb-3 flex-wrap">
+      <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
         <div>
-          <p className="font-bold text-slate-900 dark:text-white">{order.id}</p>
-          <p className="text-xs text-slate-400 mt-0.5">{formatOrderDate(order.createdAt)}</p>
+          <p className="font-extrabold text-[var(--ink-strong)]">{order.id}</p>
+          <p className="text-xs font-semibold text-[var(--muted-light)] mt-1">{formatOrderDate(order.createdAt)}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <span className={cn('text-xs font-semibold px-2.5 py-1 rounded-full capitalize', statusStyles[order.status])}>
+        <div className="flex items-center gap-3">
+          <span className={cn('text-[10px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full', statusStyles[order.status])}>
             {order.status}
           </span>
-          <span className="font-bold text-slate-900 dark:text-white">{formatMoney(order.pricing.grandTotal)}</span>
+          <span className="font-extrabold text-lg text-[var(--ink-strong)]">{formatMoney(order.pricing.grandTotal)}</span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {order.items.slice(0, 4).map(item => (
           <img
             key={item.id}
             src={item.image}
             alt={item.name}
             title={item.name}
-            className="w-11 h-11 object-cover rounded-lg border border-white dark:border-slate-700"
+            className="w-12 h-12 object-cover rounded-[8px] border border-[var(--hairline)] mix-blend-multiply bg-[var(--surface)]"
           />
         ))}
         {order.items.length > 4 && (
-          <div className="w-11 h-11 rounded-lg bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-300">
+          <div className="w-12 h-12 rounded-[8px] border border-[var(--hairline)] bg-[var(--surface)] flex items-center justify-center text-xs font-bold text-[var(--muted)]">
             +{order.items.length - 4}
           </div>
         )}
-        <span className="text-xs text-slate-400 ml-1 flex-1">
+        <span className="text-xs font-bold text-[var(--muted-light)] ml-2 flex-1">
           {order.items.reduce((n, i) => n + i.quantity, 0)} item(s)
         </span>
-        <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-          View Details <ChevronRight size={14} aria-hidden />
+        <span className="text-sm font-bold text-[var(--accent-blue)] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+          Details <ChevronRight size={16} aria-hidden />
         </span>
       </div>
     </>
   );
 
   const baseClass =
-    'block w-full text-left bg-slate-50 dark:bg-slate-800 rounded-xl p-4 border border-slate-100 dark:border-slate-700 hover:border-red-300 dark:hover:border-red-500/50 transition-colors cursor-pointer';
+    'block w-full text-left bg-[var(--surface-soft)] rounded-[var(--radius-card,16px)] p-6 border border-[var(--hairline)] shadow-sm hover:border-[var(--accent-blue)] hover:shadow-md transition-all cursor-pointer group';
 
   return (
     <motion.div

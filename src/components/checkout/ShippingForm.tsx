@@ -10,9 +10,9 @@ interface ShippingFormProps {
 
 export default function ShippingForm({ value, errors, onChange }: ShippingFormProps) {
   return (
-    <div className="space-y-4">
-      <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-        <MapPin size={18} className="text-red-500" aria-hidden />
+    <div className="space-y-6 bg-[var(--surface)] p-8 rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm">
+      <h3 className="font-extrabold text-xl text-[var(--ink-strong)] flex items-center gap-3 border-b border-[var(--hairline)] pb-4 mb-2">
+        <MapPin size={24} className="text-[var(--accent-coral)]" aria-hidden />
         Shipping Information
       </h3>
 

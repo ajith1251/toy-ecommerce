@@ -11,11 +11,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants = {
-  primary: 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-200 dark:shadow-red-900/30',
-  secondary: 'bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white',
-  outline: 'border-2 border-slate-200 hover:border-red-500 hover:text-red-500 dark:border-slate-600 dark:hover:border-red-500',
-  ghost: 'hover:bg-slate-100 text-slate-600 dark:hover:bg-slate-800 dark:text-slate-300',
-  danger: 'bg-red-600 text-white hover:bg-red-700',
+  primary: 'bg-[var(--accent-blue)] text-white hover:brightness-110 shadow-sm border border-transparent',
+  secondary: 'bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-soft)] border border-[var(--hairline)]',
+  outline: 'border border-[var(--hairline)] text-[var(--ink)] hover:bg-[var(--surface-soft)]',
+  ghost: 'text-[var(--ink)] hover:bg-[var(--surface-soft)]',
+  danger: 'bg-[var(--accent-coral)] text-white hover:brightness-110 shadow-sm border border-transparent',
 };
 
 const sizes = {
@@ -36,9 +36,10 @@ export default function Button({
   return (
     <button
       className={cn(
-        'rounded-full font-medium transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 cursor-pointer',
+        'rounded-[var(--radius-button,8px)] font-semibold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer',
         'disabled:opacity-50 disabled:cursor-not-allowed',
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500',
+        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-blue)]',
+        'active:scale-[0.98]',
         variants[variant],
         sizes[size],
         className

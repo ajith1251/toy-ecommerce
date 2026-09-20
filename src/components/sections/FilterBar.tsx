@@ -83,7 +83,7 @@ export default function FilterBar({
   }
 
   return (
-    <div className={cn('bg-white/80 backdrop-blur-md border-b border-slate-100 sticky top-[72px] z-40', className)}>
+    <div className={cn('bg-[var(--page)]/90 backdrop-blur-md border-b border-[var(--hairline)] sticky top-[72px] z-30', className)}>
       <div className="max-w-7xl mx-auto px-6 py-4">
         {/* Desktop Filters */}
         <div className="hidden md:flex items-center gap-3 flex-wrap">
@@ -118,12 +118,12 @@ export default function FilterBar({
             onChange={v => setFilter('minRating', Number(v))}
           />
 
-          <label className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium border border-slate-200 hover:border-slate-300 bg-white text-slate-700 cursor-pointer transition-all">
+          <label className="flex items-center gap-2 px-4 py-2.5 rounded-[var(--radius-button,8px)] text-sm font-semibold border border-[var(--hairline)] hover:border-[rgba(0,0,0,0.15)] shadow-sm bg-[var(--surface)] text-[var(--ink)] cursor-pointer transition-all">
             <input
               type="checkbox"
               checked={filters.inStockOnly}
               onChange={e => setFilter('inStockOnly', e.target.checked)}
-              className="rounded border-slate-300 text-red-500 focus:ring-red-300"
+              className="rounded-sm border-[var(--hairline)] text-[var(--accent-blue)] focus:ring-[rgba(76,125,255,0.15)]"
             />
             In Stock
           </label>
@@ -144,16 +144,16 @@ export default function FilterBar({
           <button
             onClick={onMobileFilterOpen}
             className={cn(
-              'flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium border transition-all cursor-pointer',
+              'flex items-center gap-2 px-4 py-2.5 rounded-[var(--radius-button,8px)] text-sm font-semibold border transition-all cursor-pointer shadow-sm',
               activeFilterCount > 0
-                ? 'border-red-300 bg-red-50 text-red-700'
-                : 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
+                ? 'border-[var(--accent-blue)] bg-[var(--surface)] text-[var(--accent-blue)]'
+                : 'border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] hover:border-[rgba(0,0,0,0.15)]'
             )}
           >
             <SlidersHorizontal size={16} />
             Filters
             {activeFilterCount > 0 && (
-              <span className="w-5 h-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center">
+              <span className="w-5 h-5 rounded-full bg-[var(--accent-blue)] text-white text-xs flex items-center justify-center font-bold">
                 {activeFilterCount}
               </span>
             )}
@@ -163,8 +163,8 @@ export default function FilterBar({
         {/* Active Filters + Count */}
         <div className="flex items-center justify-between mt-3 gap-4">
           <ActiveFilters chips={activeChips} onClearAll={clearFilters} />
-          <p className="text-sm text-slate-500 whitespace-nowrap">
-            <span className="font-semibold text-slate-900">{productCount}</span> of {totalCount} products
+          <p className="text-sm text-[var(--muted)] whitespace-nowrap">
+            <span className="font-semibold text-[var(--ink-strong)]">{productCount}</span> of {totalCount} products
           </p>
         </div>
       </div>

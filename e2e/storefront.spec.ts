@@ -3,12 +3,12 @@ import { test, expect } from '@playwright/test';
 test.describe('storefront browsing', () => {
   test('renders the home hero and main navigation', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('heading', { name: /Where Fun Meets/ })).toBeVisible();
-    await expect(page.getByRole('link', { name: '🧸 ToyBox' }).first()).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Every toy your family needs/ })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'ToyBox' }).first()).toBeVisible();
     await expect(page.getByRole('link', { name: 'Toys', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Wishlist', exact: true })).toBeVisible();
     await expect(page.getByRole('link', { name: 'Orders', exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Shop Now' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Start shopping' })).toBeVisible();
   });
 
   test('lists products on /products with working cards', async ({ page }) => {

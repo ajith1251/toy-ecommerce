@@ -97,23 +97,23 @@ export default function OrderDetailsPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-2xl p-6 mb-6 text-center"
+            className="bg-[var(--surface-soft)] border border-[var(--hairline)] rounded-[var(--radius-card,16px)] p-8 mb-8 text-center shadow-sm"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.1 }}
-              className="w-16 h-16 mx-auto bg-green-500 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-green-200 dark:shadow-green-900/40"
+              className="w-16 h-16 mx-auto bg-[var(--accent-green)] rounded-full flex items-center justify-center mb-6 shadow-sm"
             >
               <Check size={32} className="text-white" aria-hidden />
             </motion.div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+            <h1 className="text-3xl font-extrabold text-[var(--ink-strong)] mb-2">
               Order Confirmed! 🎉
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1 mb-5">
+            <p className="text-[var(--muted)] text-lg mt-1 mb-6 font-medium">
               Thank you for your purchase, {order.customer.firstName || 'there'}! Your order is saved below.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/orders">
                 <Button variant="outline">View All Orders</Button>
               </Link>
@@ -145,7 +145,7 @@ function OrderNotFound() {
             </Link>
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-slate-200 hover:border-red-500 hover:text-red-500 font-medium transition-all"
+              className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-[var(--hairline)] hover:border-[var(--accent-blue)] text-[var(--ink)] hover:text-[var(--accent-blue)] font-medium transition-all shadow-sm"
             >
               Back to ToyBox
             </Link>

@@ -20,13 +20,13 @@ export default function ActiveFilters({ chips, onClearAll, className }: ActiveFi
       {chips.map(chip => (
         <span
           key={chip.label}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[var(--radius-button,8px)] text-xs font-semibold bg-[var(--surface)] border border-[var(--hairline)] text-[var(--ink)] shadow-sm"
         >
           {chip.label}
           <button
             onClick={chip.onRemove}
             aria-label={`Remove ${chip.label} filter`}
-            className="p-0.5 rounded-full hover:bg-slate-200 transition-colors cursor-pointer"
+            className="p-0.5 rounded-full hover:bg-[var(--surface-soft)] hover:text-[var(--accent-coral)] transition-colors cursor-pointer text-[var(--muted)]"
           >
             <X size={12} />
           </button>
@@ -35,7 +35,7 @@ export default function ActiveFilters({ chips, onClearAll, className }: ActiveFi
       {chips.length > 1 && (
         <button
           onClick={onClearAll}
-          className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors cursor-pointer"
+          className="text-xs text-[var(--muted)] hover:text-[var(--ink-strong)] font-semibold transition-colors cursor-pointer ml-1 u-link"
         >
           Clear all
         </button>

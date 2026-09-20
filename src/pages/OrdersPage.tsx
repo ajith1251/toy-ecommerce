@@ -57,19 +57,19 @@ export default function OrdersPage() {
         <Breadcrumbs items={[{ label: 'Orders' }]} />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-6">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
-          <PackageOpen size={28} className="text-red-500" aria-hidden />
+      <div className="max-w-7xl mx-auto px-6 mt-6 mb-12">
+        <h1 className="text-4xl font-extrabold text-[var(--ink-strong)] flex items-center gap-4">
+          <PackageOpen size={36} className="text-[var(--accent-coral)]" aria-hidden />
           Order History
           {orders.length > 0 && (
-            <span className="text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1 rounded-full">
+            <span className="text-sm font-semibold bg-[var(--surface-soft)] text-[var(--muted)] border border-[var(--hairline)] px-3 py-1.5 rounded-[var(--radius-button,8px)] shadow-sm">
               {orders.length} order{orders.length === 1 ? '' : 's'}
             </span>
           )}
         </h1>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-6">
         {orders.length === 0 ? (
           <EmptyState
             icon={<PackageOpen size={64} />}
@@ -82,19 +82,19 @@ export default function OrdersPage() {
             }
           />
         ) : (
-          <div className="space-y-4 max-w-3xl">
+          <div className="space-y-6 max-w-3xl">
             {orders.map((order, idx) => (
               <OrderCard key={order.id} order={order} index={idx} to={`/orders/${order.id}`} />
             ))}
-            <p className="pt-4 text-xs text-slate-400 dark:text-slate-500 flex items-center gap-2">
+            <p className="pt-4 text-xs font-bold text-[var(--muted-light)] flex items-center gap-2">
               Orders are stored securely by ToyBox for this browser.
             </p>
           </div>
         )}
-        <div className="mt-8">
+        <div className="mt-12">
           <Link
             to="/products"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-slate-200 dark:border-slate-700 hover:border-red-500 hover:text-red-500 font-medium transition-all text-sm"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-full border-2 border-[var(--hairline)] hover:border-[var(--accent-blue)] text-[var(--ink)] hover:text-[var(--accent-blue)] font-medium transition-all text-sm shadow-sm"
           >
             Continue Shopping
           </Link>

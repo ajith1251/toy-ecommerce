@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight, SearchX } from 'lucide-react';
+import { cn } from '../../lib/cn';
 import ProductCard from '../ui/ProductCard';
 import EmptyState from '../ui/EmptyState';
 import { ProductCardSkeleton } from '../ui/Skeleton';
@@ -67,12 +68,12 @@ export default function AllProducts({
           </div>
 
           {totalPages > 1 && (
-            <div className="flex items-center justify-center gap-2 mt-12">
+            <div className="flex items-center justify-center gap-2 mt-16">
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={safePage === 1}
                 aria-label="Previous page"
-                className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="p-2 rounded-[var(--radius-button,8px)] border border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-soft)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm cursor-pointer"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -82,11 +83,12 @@ export default function AllProducts({
                   onClick={() => setPage(i + 1)}
                   aria-label={`Page ${i + 1}`}
                   aria-current={safePage === i + 1 ? 'page' : undefined}
-                  className={`w-10 h-10 rounded-lg text-sm font-medium transition-all cursor-pointer ${
+                  className={cn(
+                    'w-10 h-10 rounded-[var(--radius-button,8px)] text-sm font-semibold transition-all cursor-pointer shadow-sm',
                     safePage === i + 1
-                      ? 'bg-red-500 text-white shadow-md'
-                      : 'border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
-                  }`}
+                      ? 'bg-[var(--accent-blue)] text-white border border-transparent'
+                      : 'border border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-soft)]'
+                  )}
                 >
                   {i + 1}
                 </button>
@@ -95,7 +97,7 @@ export default function AllProducts({
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
                 aria-label="Next page"
-                className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                className="p-2 rounded-[var(--radius-button,8px)] border border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] hover:bg-[var(--surface-soft)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors shadow-sm cursor-pointer"
               >
                 <ChevronRight size={18} />
               </button>

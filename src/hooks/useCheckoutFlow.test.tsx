@@ -224,7 +224,7 @@ it('walks shipping → payment → review → confirmation and places the order 
      renderCheckout([makeCartItem(1, 29.99, 1)], onOrderPlaced, onClearCart);
 
      goToReview();
-     expect(screen.getByText('Order Summary')).toBeInTheDocument();
+     expect(screen.getByText(/Order Items/i)).toBeInTheDocument();
      expect(screen.getByRole('button', { name: /Place Order/ })).toBeInTheDocument();
 
      // Mock the payment service responses

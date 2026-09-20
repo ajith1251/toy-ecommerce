@@ -39,9 +39,9 @@ export default function PaymentForm({
   onUpiChange,
 }: PaymentFormProps) {
   return (
-    <div className="space-y-4">
-      <h3 className="font-bold text-slate-900 dark:text-white flex items-center gap-2">
-        <CreditCard size={18} className="text-red-500" aria-hidden />
+    <div className="space-y-6 bg-[var(--surface)] p-8 rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm">
+      <h3 className="font-extrabold text-xl text-[var(--ink-strong)] flex items-center gap-3 border-b border-[var(--hairline)] pb-4 mb-2">
+        <CreditCard size={24} className="text-[var(--accent-coral)]" aria-hidden />
         Payment Details
       </h3>
 
@@ -56,25 +56,24 @@ export default function PaymentForm({
               aria-checked={selected}
               onClick={() => onMethodChange(key)}
               className={cn(
-                'flex flex-col items-start gap-1 rounded-xl border-2 p-3 text-left transition-all cursor-pointer',
-                'focus:outline-none focus:ring-2 focus:ring-red-100 dark:focus:ring-red-900/30',
+                'flex flex-col items-start gap-1 rounded-[var(--radius-card,16px)] border-2 p-4 text-left transition-all cursor-pointer shadow-sm active:scale-95',
                 selected
-                  ? 'border-red-500 bg-red-50 dark:bg-red-900/10'
-                  : 'border-slate-200 dark:border-slate-700 hover:border-red-300'
+                  ? 'border-[var(--accent-coral)] bg-[var(--accent-coral)]/10'
+                  : 'border-[var(--hairline)] bg-[var(--surface-soft)] hover:border-[var(--accent-coral)]'
               )}
             >
-              <span className="flex items-center gap-2 font-semibold text-sm text-slate-900 dark:text-white">
-                <Icon size={16} className={selected ? 'text-red-500' : 'text-slate-400'} aria-hidden />
+              <span className="flex items-center gap-2 font-bold text-sm text-[var(--ink-strong)]">
+                <Icon size={18} className={selected ? 'text-[var(--accent-coral)]' : 'text-[var(--muted)]'} aria-hidden />
                 {PAYMENT_METHOD_LABELS[key]}
               </span>
-              <span className="text-xs text-slate-400 dark:text-slate-500">{description}</span>
+              <span className={cn("text-xs font-medium mt-1", selected ? 'text-[var(--accent-coral)]/80' : 'text-[var(--muted-light)]')}>{description}</span>
             </button>
           );
         })}
       </div>
 
 {value.method === 'card' && (
-         <div className="space-y-4">
+         <div className="space-y-4 pt-2">
            <Input
              label="Cardholder Name"
              name="cardName"
@@ -122,26 +121,28 @@ export default function PaymentForm({
        )}
        
        {value.method === 'upi' && (
-         <Input
-           label="UPI ID"
-           name="upiId"
-           autoComplete="off"
-           placeholder="yourname@bank"
-           value={value.upiId}
-           onChange={e => onUpiChange(e.target.value)}
-           error={errors.upiId}
-           hint="Secure UPI payment processing via Razorpay"
-         />
+         <div className="pt-2">
+           <Input
+             label="UPI ID"
+             name="upiId"
+             autoComplete="off"
+             placeholder="yourname@bank"
+             value={value.upiId}
+             onChange={e => onUpiChange(e.target.value)}
+             error={errors.upiId}
+             hint="Secure UPI payment processing via Razorpay"
+           />
+         </div>
        )}
        
        {value.method === 'cod' && (
-         <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 text-sm text-slate-500 dark:text-slate-400">
+         <div className="bg-[var(--surface-soft)] border border-[var(--hairline)] rounded-[var(--radius-button,8px)] p-4 text-sm font-medium text-[var(--ink)] mt-2">
            Pay in cash or by card when your order arrives. No payment credentials needed.
          </div>
        )}
        
-       <p className="flex items-center gap-2 text-xs text-slate-400 dark:text-slate-500 pt-2">
-         <Lock size={12} aria-hidden />
+       <p className="flex items-center gap-2 text-xs font-bold text-[var(--muted-light)] pt-4 border-t border-[var(--hairline)] mt-4">
+         <Lock size={14} aria-hidden className="text-[var(--accent-coral)]" />
          Payments processed securely via Razorpay
        </p>
     </div>

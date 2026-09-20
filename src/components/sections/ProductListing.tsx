@@ -64,9 +64,9 @@ export default function ProductListing({
   return (
     <div>
       {title && (
-        <div className="max-w-7xl mx-auto px-6 pt-8 pb-2">
-          <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white">{title}</h1>
-          {subtitle && <p className="text-slate-500 dark:text-slate-400 mt-1">{subtitle}</p>}
+        <div className="max-w-7xl mx-auto px-6 pt-10 pb-4">
+          <h1 className="text-4xl font-semibold text-[var(--ink-strong)] mb-2">{title}</h1>
+          {subtitle && <p className="text-[var(--muted)] text-lg">{subtitle}</p>}
         </div>
       )}
 

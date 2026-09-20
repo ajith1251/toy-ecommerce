@@ -34,13 +34,13 @@ export default function EmptyState({
       animate={{ opacity: 1, y: 0 }}
       className={cn('text-center py-24 max-w-xl mx-auto px-6', className)}
     >
-      <div className="w-20 h-20 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-5">
-        <span className="text-slate-300 dark:text-slate-600 [&>svg]:w-10 [&>svg]:h-10" aria-hidden>
+      <div className="w-20 h-20 mx-auto rounded-full bg-[var(--surface-soft)] flex items-center justify-center mb-6 border border-[var(--hairline)] shadow-sm">
+        <span className="text-[var(--muted-light)] [&>svg]:w-8 [&>svg]:h-8" aria-hidden>
           {icon}
         </span>
       </div>
-      <Heading className="text-2xl font-bold text-slate-900 dark:text-white mb-2">{title}</Heading>
-      {description && <p className="text-slate-500 dark:text-slate-400 mb-8">{description}</p>}
+      <Heading className="text-2xl font-semibold text-[var(--ink-strong)] mb-3">{title}</Heading>
+      {description && <p className="text-[var(--muted)] mb-8 text-base leading-relaxed">{description}</p>}
       {actions && <div className="flex flex-col sm:flex-row gap-3 justify-center">{actions}</div>}
     </motion.div>
   );

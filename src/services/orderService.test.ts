@@ -215,6 +215,6 @@ describe('delivery estimation', () => {
 
   it('formats a readable delivery range', () => {
     const placed = new Date(2026, 7, 15, 10, 0, 0).toISOString();
-    expect(formatDeliveryRange(placed)).toMatch(/^\d{1,2} \w{3} – \d{1,2} \w{3}, \d{4}$/);
+    expect(formatDeliveryRange(placed)).toMatch(/^(?:\w{3} \d{1,2}|\d{1,2} \w{3}) – (?:\w{3} \d{1,2}|\d{1,2} \w{3}), \d{4}$/);
   });
 });

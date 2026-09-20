@@ -14,10 +14,10 @@ const icons = {
   info: Info,
 };
 
-const colors = {
-  success: 'bg-green-50 text-green-800 border-green-200',
-  error: 'bg-red-50 text-red-800 border-red-200',
-  info: 'bg-blue-50 text-blue-800 border-blue-200',
+const iconColors = {
+  success: 'text-[var(--accent-green)]',
+  error: 'text-[var(--accent-coral)]',
+  info: 'text-[var(--accent-blue)]',
 };
 
 export default function ToastContainer({ toasts, onRemove }: ToastContainerProps) {
@@ -29,20 +29,20 @@ export default function ToastContainer({ toasts, onRemove }: ToastContainerProps
           return (
             <motion.div
               key={toast.id}
-              initial={{ opacity: 0, x: 100, scale: 0.9 }}
+              initial={{ opacity: 0, x: 50, scale: 0.95 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
-              exit={{ opacity: 0, x: 100, scale: 0.9 }}
+              exit={{ opacity: 0, x: 50, scale: 0.95 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
               className={cn(
-                'flex items-center gap-3 px-4 py-3 rounded-xl border shadow-lg min-w-[280px]',
-                colors[toast.type]
+                'flex items-center gap-3 px-4 py-3 rounded-[var(--radius-button,8px)] border border-[var(--hairline)] bg-[var(--surface)] text-[var(--ink)] shadow-[0_4px_16px_rgba(0,0,0,0.06)] min-w-[280px]'
               )}
             >
-              <Icon size={18} className="flex-shrink-0" />
-              <span className="text-sm font-medium flex-1">{toast.message}</span>
+              <Icon size={18} className={cn("flex-shrink-0", iconColors[toast.type])} />
+              <span className="text-sm font-semibold flex-1">{toast.message}</span>
               <button
                 onClick={() => onRemove(toast.id)}
                 aria-label="Dismiss notification"
-                className="p-0.5 rounded-full hover:bg-black/5 transition-colors cursor-pointer"
+                className="p-1 rounded-full text-[var(--muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--ink)] transition-colors cursor-pointer"
               >
                 <X size={14} />
               </button>

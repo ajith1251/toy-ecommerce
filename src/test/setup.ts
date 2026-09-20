@@ -5,6 +5,35 @@ import { CATEGORIES, PRODUCTS } from '../data/products';
 import { __resetCatalogForTests, __seedCatalogForTests } from '../services/productService';
 import { slugify } from '../utils/productFilters';
 
+// ── Node ≥26 localStorage shim ──────────────────────────────────────────
+// Node 26 defines a global `localStorage` getter that returns undefined
+// unless --localstorage-file is provided. Because the key then already
+// exists on globalThis, vitest's jsdom environment skips populating the
+// real jsdom-backed storage, and every localStorage access would crash.
+// Install an in-memory storage only when the global is unusable.
+if (typeof globalThis.localStorage === 'undefined' || globalThis.localStorage === null) {
+  const store = new Map<string, string>();
+  Object.defineProperty(globalThis, 'localStorage', {
+    configurable: true,
+    value: {
+      getItem: (key: string) => (store.has(key) ? (store.get(key) as string) : null),
+      setItem: (key: string, value: string) => {
+        store.set(key, String(value));
+      },
+      removeItem: (key: string) => {
+        store.delete(key);
+      },
+      clear: () => {
+        store.clear();
+      },
+      key: (index: number) => Array.from(store.keys())[index] ?? null,
+      get length() {
+        return store.size;
+      },
+    },
+  });
+}
+
 // ── Framer Motion mock ──────────────────────────────────────────────────────
 // jsdom can't run real spring/opacity animations reliably and they add no
 // value to behavior tests. Every motion.* element renders as its plain DOM

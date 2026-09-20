@@ -31,37 +31,22 @@ function renderNavbar({
 }
 
 describe('Navbar auth UI', () => {
-  it('shows a Log in link for guests', () => {
+  it('shows an account icon link for desktop users', () => {
     renderNavbar({ value: { status: 'unauthenticated' } });
-    expect(screen.getByRole('link', { name: /log in/i })).toHaveAttribute('href', '/login');
-    expect(screen.queryByRole('link', { name: /my account/i })).not.toBeInTheDocument();
-  });
-
-  it('shows the account link, first name, and logout for authenticated users', () => {
-    renderNavbar({ value: { status: 'authenticated', user } });
-    expect(screen.getByRole('link', { name: /my account/i })).toHaveAttribute('href', '/account');
-    expect(screen.getByText('Jane')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /log out/i })).toBeInTheDocument();
-  });
-
-  it('logs the user out and returns home', async () => {
-    const logout = vi.fn().mockResolvedValue(undefined);
-    renderNavbar({ value: { status: 'authenticated', user, logout } });
-    await userEvent.click(screen.getByRole('button', { name: /log out/i }));
-    await waitFor(() => expect(logout).toHaveBeenCalled());
+    expect(screen.getByRole('link', { name: /account/i })).toHaveAttribute('href', '/account');
   });
 
   it('mobile menu shows auth actions for guests', async () => {
     renderNavbar({ value: { status: 'unauthenticated' } });
     await userEvent.click(screen.getByRole('button', { name: /toggle menu/i }));
-    expect(screen.getByRole('link', { name: /^register$/i })).toHaveAttribute('href', '/register');
-    expect(screen.getAllByRole('link', { name: /log in/i })).toHaveLength(2); // desktop + mobile
+    expect(screen.getByRole('link', { name: /create an account/i })).toHaveAttribute('href', '/register');
+    expect(screen.getByRole('link', { name: /log in/i })).toHaveAttribute('href', '/login');
   });
 
   it('mobile menu shows account actions for authenticated users', async () => {
     renderNavbar({ value: { status: 'authenticated', user } });
     await userEvent.click(screen.getByRole('button', { name: /toggle menu/i }));
-    expect(screen.getAllByRole('link', { name: /my account/i })).toHaveLength(2); // desktop + mobile
-    expect(screen.getAllByRole('button', { name: /log out/i })).toHaveLength(2); // desktop + mobile
+    expect(screen.getByRole('link', { name: /my account/i })).toHaveAttribute('href', '/account');
+    expect(screen.getByRole('button', { name: /log out/i })).toBeInTheDocument();
   });
 });

@@ -62,24 +62,24 @@ export default function AccountSecurityPage() {
 
   return (
     <div className="pt-24 pb-10">
-      <div className="max-w-4xl mx-auto px-6 pt-4 flex flex-col gap-6">
+      <div className="max-w-4xl mx-auto px-6 pt-4 flex flex-col gap-8">
         <Breadcrumbs items={[{ label: 'Account', to: '/account' }, { label: 'Security' }]} />
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-500/10 flex items-center justify-center">
-            <ShieldCheck size={24} className="text-red-500" aria-hidden />
+        <div className="flex items-center gap-4">
+          <div className="w-16 h-16 rounded-[var(--radius-button,8px)] bg-[var(--accent-coral)]/10 flex items-center justify-center border border-[var(--accent-coral)]/20">
+            <ShieldCheck size={32} className="text-[var(--accent-coral)]" aria-hidden />
           </div>
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Security</h1>
-            <p className="text-sm text-slate-500 dark:text-slate-400">Change your password and manage sessions.</p>
+            <h1 className="text-3xl font-extrabold text-[var(--ink-strong)]">Security</h1>
+            <p className="text-sm font-semibold text-[var(--muted-light)] mt-1">Change your password and manage sessions.</p>
           </div>
         </div>
 
         <AccountNav />
 
-        <form onSubmit={handleChangePassword} className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <KeyRound size={18} className="text-slate-400" aria-hidden />
-            <h2 className="font-bold text-slate-900 dark:text-white">Change password</h2>
+        <form onSubmit={handleChangePassword} className="bg-[var(--surface)] rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm p-8 flex flex-col gap-6">
+          <div className="flex items-center gap-3 border-b border-[var(--hairline)] pb-4">
+            <KeyRound size={20} className="text-[var(--accent-blue)]" aria-hidden />
+            <h2 className="text-xl font-extrabold text-[var(--ink-strong)]">Change password</h2>
           </div>
           <Input
             label="Current password"
@@ -111,21 +111,21 @@ export default function AccountSecurityPage() {
             error={errors.confirm}
             required
           />
-          {formError && <p role="alert" className="text-sm font-medium text-red-500">{formError}</p>}
-          <div>
+          {formError && <p role="alert" className="text-sm font-bold text-[var(--accent-coral)] bg-[var(--accent-coral)]/10 px-4 py-3 rounded-[8px]">{formError}</p>}
+          <div className="pt-2">
             <Button type="submit" loading={saving}>Update password</Button>
           </div>
         </form>
 
-        <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 shadow-sm p-6 flex flex-col gap-3">
-          <div className="flex items-center gap-2">
-            <RefreshCw size={18} className="text-slate-400" aria-hidden />
-            <h2 className="font-bold text-slate-900 dark:text-white">Sessions</h2>
+        <div className="bg-[var(--surface)] rounded-[var(--radius-card,16px)] border border-[var(--hairline)] shadow-sm p-8 flex flex-col gap-4">
+          <div className="flex items-center gap-3 border-b border-[var(--hairline)] pb-4">
+            <RefreshCw size={20} className="text-[var(--accent-yellow)]" aria-hidden />
+            <h2 className="text-xl font-extrabold text-[var(--ink-strong)]">Sessions</h2>
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm font-medium text-[var(--muted)]">
             Sign out of this browser, or every device at once.
           </p>
-          <div className="flex gap-3">
+          <div className="flex gap-4 pt-2">
             <Button
               variant="outline"
               onClick={() => {
@@ -133,10 +133,10 @@ export default function AccountSecurityPage() {
                 void logout();
               }}
             >
-              <LogOut size={14} aria-hidden /> Log out
+              <LogOut size={16} aria-hidden className="mr-2" /> Log out
             </Button>
             <Button variant="danger" onClick={handleLogoutAll} loading={loggingOutAll}>
-              <LogOut size={14} aria-hidden /> Log out everywhere
+              <LogOut size={16} aria-hidden className="mr-2" /> Log out everywhere
             </Button>
           </div>
         </div>

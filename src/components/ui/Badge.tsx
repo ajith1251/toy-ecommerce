@@ -10,9 +10,9 @@ interface BadgeProps {
 }
 
 const styles: Record<BadgeVariant, string> = {
-  new: 'bg-red-500 text-white uppercase tracking-wider',
-  bestseller: 'bg-amber-500 text-white uppercase tracking-wider',
-  sale: 'bg-green-500 text-white',
+  new: 'bg-[var(--accent-blue)] text-white uppercase tracking-wider',
+  bestseller: 'bg-[var(--accent-yellow)] text-[var(--ink-strong)] uppercase tracking-wider',
+  sale: 'bg-[var(--accent-coral)] text-white',
 };
 
 /** Shared product flag badge (New / Bestseller / -% off). */
@@ -20,7 +20,7 @@ export default function Badge({ variant, children, className }: BadgeProps) {
   return (
     <span
       className={cn(
-        'text-xs font-bold px-3 py-1 rounded-full',
+        'text-xs font-bold px-2 py-1 rounded-[var(--radius-badge,6px)]',
         styles[variant],
         className
       )}

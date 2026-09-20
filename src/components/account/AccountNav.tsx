@@ -20,10 +20,10 @@ export default function AccountNav() {
           end={end}
           className={({ isActive }) =>
             cn(
-              'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all cursor-pointer',
+              'flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all cursor-pointer',
               isActive
-                ? 'bg-red-500 text-white shadow-md'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-[var(--accent-blue)] text-[var(--page)] shadow-md shadow-[var(--accent-blue)]/20'
+                : 'bg-[var(--surface-soft)] border border-[var(--hairline)] text-[var(--muted)] hover:text-[var(--ink-strong)]'
             )
           }
         >

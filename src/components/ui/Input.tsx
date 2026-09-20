@@ -11,7 +11,7 @@ export default function Input({ label, error, hint, className = '', id, ...props
   const inputId = id || props.name || label.toLowerCase().replace(/\s+/g, '-');
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={inputId} className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+      <label htmlFor={inputId} className="text-sm font-semibold text-[var(--ink-strong)]">
         {label}
       </label>
       <input
@@ -19,22 +19,22 @@ export default function Input({ label, error, hint, className = '', id, ...props
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined}
         className={cn(
-          'w-full px-4 py-3 rounded-xl border-2 bg-white dark:bg-slate-800',
-          'text-slate-900 dark:text-white text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500',
-          'focus:outline-none focus:ring-2 transition-all',
+          'w-full px-4 py-3 rounded-[var(--radius-button,8px)] border bg-[var(--surface)]',
+          'text-[var(--ink)] text-sm placeholder:text-[var(--muted-light)]',
+          'focus:outline-none focus:ring-4 transition-all',
           error
-            ? 'border-red-400 focus:border-red-500 focus:ring-red-100 dark:focus:ring-red-900/30'
-            : 'border-slate-200 dark:border-slate-700 focus:border-red-400 focus:ring-red-100 dark:focus:ring-red-900/30',
+            ? 'border-[var(--accent-coral)] focus:border-[var(--accent-coral)] focus:ring-[rgba(255,107,94,0.15)]'
+            : 'border-[var(--hairline)] focus:border-[var(--accent-blue)] focus:ring-[rgba(76,125,255,0.15)] hover:border-[rgba(0,0,0,0.15)]',
           className
         )}
         {...props}
       />
       {error ? (
-        <p id={`${inputId}-error`} role="alert" className="text-xs font-medium text-red-500">
+        <p id={`${inputId}-error`} role="alert" className="text-xs font-medium text-[var(--accent-coral)]">
           {error}
         </p>
       ) : hint ? (
-        <p id={`${inputId}-hint`} className="text-xs text-slate-400 dark:text-slate-500">
+        <p id={`${inputId}-hint`} className="text-xs text-[var(--muted)]">
           {hint}
         </p>
       ) : null}

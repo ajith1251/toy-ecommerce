@@ -35,7 +35,7 @@ export default function Modal({ isOpen, onClose, children, className, ariaLabel 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-[var(--ink)]/40 backdrop-blur-sm z-[100]"
           />
           <motion.div
             ref={panelRef}
@@ -50,14 +50,14 @@ export default function Modal({ isOpen, onClose, children, className, ariaLabel 
             className={cn(
               'fixed inset-4 md:inset-auto md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2',
               'md:w-full md:max-w-2xl md:max-h-[85vh]',
-              'bg-white rounded-2xl shadow-2xl z-[101] overflow-hidden flex flex-col outline-none',
+              'bg-[var(--surface)] rounded-[var(--radius-card,16px)] shadow-xl border border-[var(--hairline)] z-[101] overflow-hidden flex flex-col outline-none',
               className
             )}
           >
             <button
               onClick={onClose}
               aria-label="Close dialog"
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-slate-100 transition-colors z-10 cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--surface-soft)] transition-colors z-10 cursor-pointer"
             >
               <X size={20} />
             </button>

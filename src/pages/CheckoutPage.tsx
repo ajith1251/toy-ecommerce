@@ -122,49 +122,49 @@ export default function CheckoutPage() {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-6">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
-          <Lock size={24} className="text-red-500" aria-hidden />
+      <div className="max-w-7xl mx-auto px-6 mt-6 mb-8">
+        <h1 className="text-4xl font-extrabold text-[var(--ink-strong)] flex items-center gap-4">
+          <Lock size={32} className="text-[var(--accent-coral)]" aria-hidden />
           Secure Checkout
         </h1>
       </div>
 
       {showSteps && <CheckoutProgress current={step as CheckoutStep} />}
 
-      <div className="max-w-7xl mx-auto px-6 mt-6">
+      <div className="max-w-7xl mx-auto px-6 mt-8">
         {step === 'processing' ? (
-          <div className="text-center py-20">
-            <Loader2 size={48} className="mx-auto text-red-500 animate-spin mb-4" aria-hidden />
-            <p className="text-lg font-semibold text-slate-900 dark:text-white">Processing payment…</p>
-            <p className="text-sm text-slate-400 mt-1">Please don't close this window</p>
+          <div className="text-center py-24 bg-[var(--surface)] border border-[var(--hairline)] rounded-[24px] shadow-sm">
+            <Loader2 size={48} className="mx-auto text-[var(--accent-blue)] animate-spin mb-6" aria-hidden />
+            <p className="text-2xl font-bold text-[var(--ink-strong)] mb-2">Processing payment…</p>
+            <p className="text-lg text-[var(--muted)]">Please don't close this window</p>
           </div>
         ) : (
-          <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col lg:flex-row gap-8">
             <div className="flex-1 min-w-0">
               {flow.placeError && (
-                <div className="flex items-start gap-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 mb-5">
-                  <AlertTriangle size={18} className="text-red-500 flex-shrink-0 mt-0.5" aria-hidden />
+                <div className="flex items-start gap-3 bg-[var(--accent-coral)]/10 border border-[var(--accent-coral)]/30 rounded-[var(--radius-card,16px)] p-6 mb-6">
+                  <AlertTriangle size={20} className="text-[var(--accent-coral)] flex-shrink-0 mt-0.5" aria-hidden />
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-red-800 dark:text-red-300">
+                    <p className="text-sm font-bold text-[var(--ink-strong)]">
                       We couldn't place your order
                     </p>
-                    <p className="text-sm text-red-700 dark:text-red-300/80 mt-0.5">{flow.placeError}</p>
+                    <p className="text-sm text-[var(--ink)] mt-1">{flow.placeError}</p>
                   </div>
                 </div>
               )}
 
               {flow.cartChanged && (
-                <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-5">
-                  <AlertTriangle size={18} className="text-amber-500 flex-shrink-0 mt-0.5" aria-hidden />
+                <div className="flex items-start gap-3 bg-[var(--accent-yellow)]/20 border border-[var(--accent-yellow)]/40 rounded-[var(--radius-card,16px)] p-6 mb-6">
+                  <AlertTriangle size={20} className="text-[var(--accent-yellow)] flex-shrink-0 mt-0.5" aria-hidden />
                   <div className="flex-1">
-                    <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">
+                    <p className="text-sm font-bold text-[var(--ink-strong)]">
                       Your cart has changed.
                     </p>
-                    <p className="text-sm text-amber-700 dark:text-amber-300/80 mt-0.5">
+                    <p className="text-sm text-[var(--ink)] mt-1 mb-3">
                       Please review your cart before placing the order.
                     </p>
-                    <Button size="sm" variant="outline" className="mt-2" onClick={flow.handleRefreshCart}>
-                      <RefreshCcw size={14} aria-hidden /> Review updated cart
+                    <Button size="sm" variant="outline" onClick={flow.handleRefreshCart}>
+                      <RefreshCcw size={14} className="mr-2" aria-hidden /> Review updated cart
                     </Button>
                   </div>
                 </div>
@@ -200,8 +200,8 @@ export default function CheckoutPage() {
             </div>
 
             {/* Desktop order summary */}
-            <aside className="hidden lg:block w-72 flex-shrink-0">
-              <div className="lg:sticky lg:top-24">
+            <aside className="hidden lg:block w-80 flex-shrink-0">
+              <div className="lg:sticky lg:top-28">
                 <OrderSummary items={shop.cartItems} totals={flow.totals} />
               </div>
             </aside>
@@ -210,29 +210,31 @@ export default function CheckoutPage() {
       </div>
 
       {showSteps && (
-        <div className="max-w-7xl mx-auto px-6 mt-8">
-          <div className="flex items-center justify-between gap-3 border-t border-slate-100 dark:border-slate-800 pt-6">
+        <div className="max-w-7xl mx-auto px-6 mt-12 mb-16">
+          <div className="flex items-center justify-between gap-4 border-t border-[var(--hairline)] pt-8">
             {step === 'payment' || step === 'review' ? (
-              <Button variant="ghost" onClick={() => setStep(step === 'payment' ? 'shipping' : 'payment')}>
-                <ArrowLeft size={16} aria-hidden /> Back
+              <Button variant="ghost" onClick={() => setStep(step === 'payment' ? 'shipping' : 'payment')} className="px-0 hover:bg-transparent">
+                <ArrowLeft size={16} aria-hidden className="mr-2" /> Back
               </Button>
             ) : (
               <span />
             )}
 
             {step === 'shipping' && (
-              <Button onClick={flow.handleContinueShipping}>Continue to Payment</Button>
+              <Button onClick={flow.handleContinueShipping} size="lg" className="rounded-full px-8 shadow-sm">Continue to Payment</Button>
             )}
             {step === 'payment' && (
-              <Button onClick={flow.handleContinuePayment}>Review Order</Button>
+              <Button onClick={flow.handleContinuePayment} size="lg" className="rounded-full px-8 shadow-sm">Review Order</Button>
             )}
             {step === 'review' && (
               <Button
                 onClick={flow.handlePlaceOrder}
                 disabled={shop.cartItems.length === 0 || flow.cartChanged}
                 title={flow.cartChanged ? 'Review your updated cart before placing the order' : undefined}
+                size="lg"
+                className="rounded-full px-8 shadow-md shadow-[var(--accent-blue)]/20"
               >
-                <Lock size={16} aria-hidden /> Place Order · {formatMoney(flow.totals.grandTotal)}
+                <Lock size={16} aria-hidden className="mr-2" /> Place Order · {formatMoney(flow.totals.grandTotal)}
               </Button>
             )}
           </div>
@@ -283,19 +285,19 @@ function SavedAddressPicker({ onSelect }: { onSelect: (address: Address) => void
   if (status !== 'authenticated' || !addresses || addresses.length === 0) return null;
 
   return (
-    <div className="mb-5">
-      <p className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+    <div className="mb-6 bg-[var(--surface-soft)] p-5 rounded-[var(--radius-card,16px)] border border-[var(--hairline)]">
+      <p className="text-sm font-bold text-[var(--ink-strong)] mb-4">
         Use a saved address ({user?.firstName})
       </p>
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-3">
         {addresses.map(address => (
           <button
             key={address.id}
             type="button"
             onClick={() => onSelect(address)}
-            className="flex items-center gap-2 text-sm font-semibold bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 hover:border-red-400 transition-colors cursor-pointer"
+            className="flex items-center gap-2 text-sm font-bold bg-[var(--surface)] border-2 border-[var(--hairline)] rounded-[var(--radius-button,8px)] px-4 py-2 hover:border-[var(--accent-blue)] transition-colors cursor-pointer shadow-sm"
           >
-            <MapPin size={14} className="text-red-500" aria-hidden />
+            <MapPin size={16} className="text-[var(--accent-coral)]" aria-hidden />
             <span>{address.label || `${address.city}, ${address.country}`}</span>
           </button>
         ))}
@@ -310,24 +312,24 @@ function MobileSummary({ items, totals }: { items: ReturnType<typeof useShop>['c
   if (items.length === 0) return null;
 
   return (
-    <div className="lg:hidden mb-4">
+    <div className="lg:hidden mb-6">
       <button
         type="button"
         onClick={() => setSummaryOpen(o => !o)}
         aria-expanded={summaryOpen}
-        className="w-full flex items-center justify-between bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl px-4 py-3 text-sm font-semibold text-slate-900 dark:text-white cursor-pointer"
+        className="w-full flex items-center justify-between bg-[var(--surface)] border border-[var(--hairline)] rounded-[var(--radius-button,8px)] px-5 py-4 text-sm font-bold text-[var(--ink-strong)] shadow-sm cursor-pointer"
       >
-        <span className="flex items-center gap-2">
-          <ShoppingBag size={16} className="text-red-500" aria-hidden />
+        <span className="flex items-center gap-3">
+          <ShoppingBag size={18} className="text-[var(--accent-blue)]" aria-hidden />
           Order Summary ({items.length})
         </span>
         <ChevronDown
-          size={16}
+          size={18}
           className={cn('transition-transform', summaryOpen && 'rotate-180')}
           aria-hidden
         />
       </button>
-      {summaryOpen && <OrderSummary items={items} totals={totals} className="mt-3" />}
+      {summaryOpen && <OrderSummary items={items} totals={totals} className="mt-4" />}
     </div>
   );
 }

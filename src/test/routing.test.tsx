@@ -131,9 +131,9 @@ describe('Routing', () => {
 
   it('renders the home route', () => {
     renderApp('/');
-    expect(screen.getByText('New Kids Collection')).toBeInTheDocument();
-    expect(screen.getByText('Browse Categories')).toBeInTheDocument();
-    expect(screen.getAllByText('ToyBox', { selector: 'span' }).length).toBeGreaterThan(0);
+    expect(screen.getByText('PLAY.')).toBeInTheDocument();
+    expect(screen.getByText('Trending Now')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Start shopping' })).toBeInTheDocument();
   });
 
   it('renders the products route with the full browsing experience', () => {
@@ -159,7 +159,7 @@ describe('Routing', () => {
     const router = renderApp('/products');
     fireEvent.click(screen.getByRole('link', { name: 'View Hero Squad Action Pack' }));
     expect(router.state.location.pathname).toBe('/product/1');
-    expect(screen.getByText('Product Information')).toBeInTheDocument();
+    expect(screen.getByText('Product Details')).toBeInTheDocument();
   });
 
   it('renders a product detail page for a valid id', () => {
@@ -167,7 +167,7 @@ describe('Routing', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Architect Series: Skyline Edition' })).toBeInTheDocument();
     expect(screen.getAllByText('In Stock').length).toBeGreaterThan(0);
     expect(screen.getByText('Related Products')).toBeInTheDocument();
-    expect(screen.getByText('Product Information')).toBeInTheDocument();
+    expect(screen.getByText('Product Details')).toBeInTheDocument();
   });
 
   it('shows a product-not-found state for an invalid product id', () => {
@@ -378,13 +378,13 @@ describe('Routing', () => {
 
   it('supports forward/back browser navigation', () => {
     const router = renderApp('/');
-    fireEvent.click(screen.getByRole('link', { name: 'Toys' }));
+    fireEvent.click(screen.getByRole('link', { name: 'Shop All' }));
     expect(router.state.location.pathname).toBe('/products');
     expect(screen.getByText('All Toys')).toBeInTheDocument();
 
     act(() => { router.navigate(-1); });
     expect(router.state.location.pathname).toBe('/');
-    expect(screen.getByText('New Kids Collection')).toBeInTheDocument();
+    expect(screen.getByText('PLAY.')).toBeInTheDocument();
 
     act(() => { router.navigate(1); });
     expect(router.state.location.pathname).toBe('/products');

@@ -12,15 +12,15 @@ import { fillCard, fillShipping } from './helpers';
 test('completes the critical purchase journey end to end', async ({ page }) => {
   // ── Home ─────────────────────────────────────────────────────────────
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: /Where Fun Meets/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Every toy your family needs/ })).toBeVisible();
 
   // ── Products ─────────────────────────────────────────────────────────
-  await page.getByRole('button', { name: 'Shop Now' }).click();
+  await page.getByRole('link', { name: 'Start shopping' }).click();
   await expect(page).toHaveURL(/\/products$/);
   await expect(page.getByRole('heading', { name: 'All Toys' })).toBeVisible();
 
   // ── Search ───────────────────────────────────────────────────────────
-  await page.getByRole('link', { name: 'Search toys' }).click();
+  await page.getByRole('link', { name: 'Search' }).click();
   await expect(page).toHaveURL(/\/search$/);
   await page.getByPlaceholder('Search products...').fill('robot');
   await page.getByRole('button', { name: 'Search', exact: true }).click();

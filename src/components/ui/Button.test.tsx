@@ -12,7 +12,7 @@ describe('Button', () => {
 
   it('applies the requested variant classes', () => {
     const { container } = render(<Button variant="danger">Delete</Button>);
-    expect(container.querySelector('button')).toHaveClass('bg-red-600');
+    expect(container.querySelector('button')).toHaveClass('bg-[var(--accent-coral)]');
   });
 
   it('applies the requested size classes', () => {

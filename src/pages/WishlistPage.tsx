@@ -23,12 +23,12 @@ export default function WishlistPage() {
         <Breadcrumbs items={[{ label: 'Wishlist' }]} />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 mt-6">
-        <h1 className="text-3xl font-extrabold text-slate-900 dark:text-white flex items-center gap-3">
-          <Heart size={28} className="text-red-500" aria-hidden />
+      <div className="max-w-7xl mx-auto px-6 mt-6 mb-12">
+        <h1 className="text-4xl font-extrabold text-[var(--ink-strong)] flex items-center gap-4">
+          <Heart size={36} className="text-[var(--accent-coral)]" aria-hidden />
           My Wishlist
           {wishlistToys.length > 0 && (
-            <span className="text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-3 py-1 rounded-full">
+            <span className="text-sm font-semibold bg-[var(--surface-soft)] text-[var(--muted)] border border-[var(--hairline)] px-3 py-1.5 rounded-[var(--radius-button,8px)] shadow-sm">
               {wishlistToys.length} item{wishlistToys.length === 1 ? '' : 's'}
             </span>
           )}
