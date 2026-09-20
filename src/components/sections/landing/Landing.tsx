@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useMemo, useState } from 'react';
+import { Boxes, Gift, ShieldCheck, Sparkles } from 'lucide-react';
 import { useReveal } from '../../../hooks/useReveal';
 import { getProducts } from '../../../services/productService';
 import { formatMoney } from '../../../utils/orderCalculations';
@@ -18,7 +19,7 @@ export function LandingHero() {
   }, []);
 
   const heroImages = useMemo(() => {
-    return getProducts().filter(p => p.image).slice(0, 3);
+    return getProducts().filter(p => p.image).slice(0, 7);
   }, []);
 
   return (
@@ -29,7 +30,29 @@ export function LandingHero() {
 
       <div className="mx-auto w-full max-w-[1440px] pt-32 pb-16 grid lg:grid-cols-2 gap-16 items-center relative z-10">
         <div className={on ? 'lines' : 'lines opacity-0'}>
-          <Eyebrow className="text-[var(--accent-blue)]">Welcome to ToyBox</Eyebrow>
+          <div className="mb-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="eyebrow text-[var(--accent-blue)]">Welcome to ToyBox</p>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-yellow)] px-3 py-1 text-[11px] font-extrabold uppercase tracking-widest text-[var(--ink-strong)] border-2 border-[var(--ink-strong)] shadow-md -rotate-2 hover:rotate-0 transition-transform duration-300">
+                <Sparkles size={14} strokeWidth={3} aria-hidden="true" />
+                New drops weekly
+              </span>
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--hairline)] bg-white px-3 py-1 text-xs font-semibold text-[var(--ink-strong)] shadow-sm hover:-translate-y-0.5 transition-transform">
+                <Boxes size={14} className="text-[var(--accent-blue)]" aria-hidden="true" />
+                54 toys ready to play
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--hairline)] bg-white px-3 py-1 text-xs font-semibold text-[var(--ink-strong)] shadow-sm hover:-translate-y-0.5 transition-transform">
+                <Gift size={14} className="text-[var(--accent-coral)]" aria-hidden="true" />
+                Same-day gift wrap
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--hairline)] bg-white px-3 py-1 text-xs font-semibold text-[var(--ink-strong)] shadow-sm hover:-translate-y-0.5 transition-transform">
+                <ShieldCheck size={14} className="text-[var(--accent-green)]" aria-hidden="true" />
+                Kid-tested &amp; approved
+              </span>
+            </div>
+          </div>
           <h1 className="text-6xl sm:text-7xl lg:text-8xl font-extrabold tracking-tight text-[var(--ink-strong)] leading-[1.05] mb-6">
             <span className="line-mask block text-[var(--accent-coral)]"><span>PLAY.</span></span>
             <span className="line-mask block text-[var(--accent-yellow)]"><span>CREATE.</span></span>
@@ -50,6 +73,39 @@ export function LandingHero() {
               </Button>
             </Link>
           </div>
+
+          {heroImages[3] && (
+            <div className="mt-10 relative max-w-[400px]">
+              <img
+                src={heroImages[3].image}
+                alt={heroImages[3].name}
+                className="w-full h-[240px] object-cover rounded-[24px] shadow-xl -rotate-2 hover:rotate-0 transition-all duration-500 border-4 border-white"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-white rounded-2xl shadow-lg px-4 py-2 border border-[var(--hairline)]">
+                <p className="text-xs font-bold uppercase tracking-widest text-[var(--accent-blue)]">Featured</p>
+                <p className="text-sm font-semibold text-[var(--ink-strong)] leading-tight">{heroImages[3].name}</p>
+              </div>
+            </div>
+          )}
+
+          {heroImages.length > 4 && (
+            <div className="mt-8 flex items-center gap-4">
+              <div className="flex -space-x-3">
+                {heroImages.slice(4, 7).map(p => (
+                  <img
+                    key={p.id}
+                    src={p.image}
+                    alt=""
+                    className="w-11 h-11 rounded-full object-cover border-2 border-white shadow-md"
+                  />
+                ))}
+              </div>
+              <p className="text-sm text-[var(--muted)]">
+                <span className="font-bold text-[var(--accent-coral)]">★ 4.9</span>{' '}
+                <span className="font-semibold text-[var(--ink-strong)]">from 2,400+ happy families</span>
+              </p>
+            </div>
+          )}
         </div>
 
         {/* Hero Imagery */}
@@ -63,6 +119,14 @@ export function LandingHero() {
           {heroImages[2] && (
             <img src={heroImages[2].image} alt="Hero toy 3" className="absolute top-1/2 left-0 w-[200px] h-[200px] object-cover rounded-full shadow-lg rotate-12 hover:rotate-0 transition-all duration-500 z-10 border-4 border-white" />
           )}
+          {heroImages[4] && (
+            <img src={heroImages[4].image} alt="Hero toy 4" className="absolute top-0 left-2 w-[180px] h-[140px] object-cover rounded-[20px] shadow-lg -rotate-6 hover:rotate-0 transition-all duration-500 z-0 border-4 border-white" />
+          )}
+          <div className="absolute bottom-4 right-4 z-40 bg-white rounded-2xl shadow-xl px-5 py-3 border border-[var(--hairline)] rotate-2">
+            <p className="text-sm font-bold text-[var(--ink-strong)]">
+              <span className="text-[var(--accent-yellow)]">★</span> Free shipping over $50
+            </p>
+          </div>
         </div>
       </div>
     </section>

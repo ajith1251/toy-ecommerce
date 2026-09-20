@@ -10,10 +10,10 @@ interface NavbarProps {
 }
 
 const navLinks = [
-  { to: '/products', label: 'Shop All' },
-  { to: '/category/build', label: 'Build' },
-  { to: '/category/create', label: 'Create' },
-  { to: '/category/discover', label: 'Discover' },
+  { to: '/products', label: 'Shop All', accent: 'var(--accent-purple)' },
+  { to: '/category/build', label: 'Build', accent: 'var(--accent-blue)' },
+  { to: '/category/create', label: 'Create', accent: 'var(--accent-yellow)' },
+  { to: '/category/discover', label: 'Discover', accent: 'var(--accent-coral)' },
 ];
 
 export default function Navbar({ onCartOpen }: NavbarProps) {
@@ -83,11 +83,31 @@ export default function Navbar({ onCartOpen }: NavbarProps) {
                 key={link.to}
                 to={link.to}
                 end={link.to === '/'}
-                className={({ isActive }) =>
-                  cn('text-sm font-semibold transition-colors', isActive ? 'text-[var(--accent-blue)]' : 'text-[var(--ink)] hover:text-[var(--accent-blue)]')
+                className={() =>
+                  cn(
+                    'group relative inline-flex items-center gap-1.5 pb-1 text-sm font-semibold transition-colors',
+                    'text-[var(--ink)] hover:text-[var(--accent-blue)]'
+                  )
                 }
               >
-                {link.label}
+                {({ isActive }) => (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full opacity-0 scale-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300"
+                      style={{ backgroundColor: link.accent }}
+                    />
+                    <span className={isActive ? 'text-[var(--accent-blue)]' : undefined}>{link.label}</span>
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        'absolute bottom-0 left-0 h-[3px] w-full origin-left rounded-full transition-transform duration-300',
+                        isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      )}
+                      style={{ backgroundColor: link.accent }}
+                    />
+                  </>
+                )}
               </NavLink>
             ))}
           </div>
@@ -147,11 +167,12 @@ export default function Navbar({ onCartOpen }: NavbarProps) {
                 onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   cn(
-                    'text-3xl font-bold tracking-tight',
+                    'flex items-center gap-3 text-3xl font-bold tracking-tight',
                     isActive ? 'text-[var(--accent-blue)]' : 'text-[var(--ink-strong)]'
                   )
                 }
               >
+                <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: link.accent }} />
                 {link.label}
               </NavLink>
             ))}

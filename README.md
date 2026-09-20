@@ -148,17 +148,24 @@ flowchart TD
 
 Prerequisites: **Node.js 22+** and npm. No Docker or PostgreSQL installation required for development — the backend manages its own embedded PostgreSQL.
 
+**One command runs the whole stack** (API on :4000 with embedded PG, Vite on :5173):
+
 ```bash
 npm install
+npm run dev:all
+```
 
+Open http://localhost:5173. The catalog loads from the API (seed/migrations run automatically on first boot); placing an order exercises the real backend. Press **Ctrl-C** to stop both servers cleanly — the embedded PostgreSQL is shut down too, so nothing is left running.
+
+In VS Code, run the task **ToyBox: Run Full Stack (dev)** (`⌘⇧P` → Tasks: Run Task). You can also start the two servers on separate terminals instead:
+
+```bash
 # terminal 1 — API on :4000 (starts embedded PG, migrates, seeds)
 npm run server:dev
 
 # terminal 2 — Vite dev server on :5173
 npm run dev
 ```
-
-Open http://localhost:5173. The catalog loads from the API; placing an order exercises the real backend.
 
 ### Environment variables
 

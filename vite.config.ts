@@ -5,6 +5,20 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    // Allow Cloudflare quick-tunnel (trycloudflare.com) hosts so the dev
+    // server can be reached through a live public URL.
+    allowedHosts: ['.trycloudflare.com'],
+    // Same-origin API in dev: the browser calls /api on the Vite origin and
+    // Vite forwards to the backend. Works over http://localhost and HTTPS
+    // tunnels alike (no mixed-content blocking).
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+      },
+    },
+  },
   build: {
     rollupOptions: {
       output: {
